@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
+import useFinancialRecords from "../../store/financialRecords.js";
 
 const RecordForm = () => {
   const [description, setDescription] = useState("");
@@ -8,19 +9,24 @@ const RecordForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const { user } = useUser();
+  const { createRecord } = useFinancialRecords();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newRecord = {
       userId: user?.id,
-      date: new Date(),
       description: description,
       amount: parseFloat(amount),
       category: category,
       paymentMethod: paymentMethod,
     };
 
-    // addRecord(newRecord)
+    const { success, message } = await createRecord(newRecord);
+    if (success) {
+      alert("success");
+    } else {
+      alert(message);
+    }
 
     setDescription("");
     setAmount("");

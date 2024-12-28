@@ -1,8 +1,12 @@
 import React from 'react'
+import useFinancialRecords from '../../store/financialRecords.js'
 
 const RecordList = () => {
+  const { fetchRecord, deleteRecord, updateRecord } = useFinancialRecords();
   return (
-    <div>RecordList</div>
+    <div className='table-container'>
+      
+    </div>
   )
 }
 
